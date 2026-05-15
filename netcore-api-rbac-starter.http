@@ -1,0 +1,6 @@
+@NetcoreHRIS_HostAddress = http://localhost:5026
+
+GET {{NetcoreHRIS_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,40 @@
+using System.Text.Json;
+using NetcoreHRIS.Data;
+using NetcoreHRIS.Security;
+
+public class AuditService
+{
+    private readonly AppDbContext _db;
+    private readonly ICurrentUserService? _currentUser;
+
+    public AuditService(AppDbContext db, ICurrentUserService? currentUser = null)
+    {
+        _db = db;
+        _currentUser = currentUser;
+    }
+
+    public async Task LogAsync(
+        string entityName,
+        Guid entityId,
+        string action,
+        object? before,
+        object? after,
+        CancellationToken ct)
+    {
+        var log = new AuditLog
+        {
+            EntityName = entityName,
+            EntityId = entityId,
+            Action = action,
+
+            UserId = _currentUser?.UserId.ToString(),
+            UserName = string.IsNullOrWhiteSpace(_currentUser?.Email) ? null : _currentUser.Email,
+
+            Before = before != null ? JsonSerializer.Serialize(before) : null,
+            After = after != null ? JsonSerializer.Serialize(after) : null
+        };
+
+        _db.AuditLogs.Add(log);
+        await _db.SaveChangesAsync(ct);
+    }
+}
