@@ -25,6 +25,22 @@ public static class DatabaseSeeder
     private static readonly Guid CreateEmployeePermissionId = Guid.Parse("66666666-0000-0000-0000-000000000015");
     private static readonly Guid UpdateEmployeePermissionId = Guid.Parse("66666666-0000-0000-0000-000000000016");
     private static readonly Guid DeleteEmployeePermissionId = Guid.Parse("66666666-0000-0000-0000-000000000017");
+    private static readonly Guid ReadAttendancePermissionId = Guid.Parse("66666666-0000-0000-0000-000000000018");
+    private static readonly Guid CreateAttendancePermissionId = Guid.Parse("66666666-0000-0000-0000-000000000019");
+    private static readonly Guid UpdateAttendancePermissionId = Guid.Parse("66666666-0000-0000-0000-000000000020");
+    private static readonly Guid DeleteAttendancePermissionId = Guid.Parse("66666666-0000-0000-0000-000000000021");
+    private static readonly Guid ReadLeaveMasterPermissionId = Guid.Parse("66666666-0000-0000-0000-000000000022");
+    private static readonly Guid CreateLeaveMasterPermissionId = Guid.Parse("66666666-0000-0000-0000-000000000023");
+    private static readonly Guid UpdateLeaveMasterPermissionId = Guid.Parse("66666666-0000-0000-0000-000000000024");
+    private static readonly Guid DeleteLeaveMasterPermissionId = Guid.Parse("66666666-0000-0000-0000-000000000025");
+    private static readonly Guid ReadLeaveAllowancePermissionId = Guid.Parse("66666666-0000-0000-0000-000000000026");
+    private static readonly Guid CreateLeaveAllowancePermissionId = Guid.Parse("66666666-0000-0000-0000-000000000027");
+    private static readonly Guid UpdateLeaveAllowancePermissionId = Guid.Parse("66666666-0000-0000-0000-000000000028");
+    private static readonly Guid DeleteLeaveAllowancePermissionId = Guid.Parse("66666666-0000-0000-0000-000000000029");
+    private static readonly Guid ReadLeaveRequestPermissionId = Guid.Parse("66666666-0000-0000-0000-000000000030");
+    private static readonly Guid CreateLeaveRequestPermissionId = Guid.Parse("66666666-0000-0000-0000-000000000031");
+    private static readonly Guid UpdateLeaveRequestPermissionId = Guid.Parse("66666666-0000-0000-0000-000000000032");
+    private static readonly Guid DeleteLeaveRequestPermissionId = Guid.Parse("66666666-0000-0000-0000-000000000033");
 
     private static readonly Guid AdminUserId = Guid.Parse("22222222-0000-0000-0000-000000000001");
     private static readonly Guid ViewerUserId = Guid.Parse("22222222-0000-0000-0000-000000000002");
@@ -38,6 +54,7 @@ public static class DatabaseSeeder
         await SeedDepartmentsAsync(db);
         await SeedPositionsAsync(db);
         await SeedEmployeesAsync(db);
+        await SeedLeaveMastersAsync(db);
     }
 
     private static async Task SeedPermissionsAsync(AppDbContext db)
@@ -60,7 +77,23 @@ public static class DatabaseSeeder
             new Permission { Id = ReadEmployeePermissionId, Action = "read", Subject = "Employee" },
             new Permission { Id = CreateEmployeePermissionId, Action = "create", Subject = "Employee" },
             new Permission { Id = UpdateEmployeePermissionId, Action = "update", Subject = "Employee" },
-            new Permission { Id = DeleteEmployeePermissionId, Action = "delete", Subject = "Employee" }
+            new Permission { Id = DeleteEmployeePermissionId, Action = "delete", Subject = "Employee" },
+            new Permission { Id = ReadAttendancePermissionId, Action = "read", Subject = "Attendance" },
+            new Permission { Id = CreateAttendancePermissionId, Action = "create", Subject = "Attendance" },
+            new Permission { Id = UpdateAttendancePermissionId, Action = "update", Subject = "Attendance" },
+            new Permission { Id = DeleteAttendancePermissionId, Action = "delete", Subject = "Attendance" },
+            new Permission { Id = ReadLeaveMasterPermissionId, Action = "read", Subject = "LeaveMaster" },
+            new Permission { Id = CreateLeaveMasterPermissionId, Action = "create", Subject = "LeaveMaster" },
+            new Permission { Id = UpdateLeaveMasterPermissionId, Action = "update", Subject = "LeaveMaster" },
+            new Permission { Id = DeleteLeaveMasterPermissionId, Action = "delete", Subject = "LeaveMaster" },
+            new Permission { Id = ReadLeaveAllowancePermissionId, Action = "read", Subject = "LeaveAllowance" },
+            new Permission { Id = CreateLeaveAllowancePermissionId, Action = "create", Subject = "LeaveAllowance" },
+            new Permission { Id = UpdateLeaveAllowancePermissionId, Action = "update", Subject = "LeaveAllowance" },
+            new Permission { Id = DeleteLeaveAllowancePermissionId, Action = "delete", Subject = "LeaveAllowance" },
+            new Permission { Id = ReadLeaveRequestPermissionId, Action = "read", Subject = "LeaveRequest" },
+            new Permission { Id = CreateLeaveRequestPermissionId, Action = "create", Subject = "LeaveRequest" },
+            new Permission { Id = UpdateLeaveRequestPermissionId, Action = "update", Subject = "LeaveRequest" },
+            new Permission { Id = DeleteLeaveRequestPermissionId, Action = "delete", Subject = "LeaveRequest" }
         };
 
         foreach (var permission in permissions)
@@ -327,6 +360,26 @@ public static class DatabaseSeeder
                     IsActive = true,
                     Notes = "Initial seeded position"
                 });
+            }
+        }
+
+        await db.SaveChangesAsync();
+    }
+
+    private static async Task SeedLeaveMastersAsync(AppDbContext db)
+    {
+        var leaves = new[]
+        {
+            new LeaveMaster { Id = Guid.Parse("77777777-0000-0000-0000-000000000001"), Name = "Annual Leave", Code = "AL", QuotaDays = 12, IsActive = true },
+            new LeaveMaster { Id = Guid.Parse("77777777-0000-0000-0000-000000000002"), Name = "Sick Leave", Code = "SL", QuotaDays = 6, IsActive = true }
+        };
+
+        foreach (var leave in leaves)
+        {
+            var exists = await db.LeaveMasters.AnyAsync(x => x.Code == leave.Code);
+            if (!exists)
+            {
+                db.LeaveMasters.Add(leave);
             }
         }
 

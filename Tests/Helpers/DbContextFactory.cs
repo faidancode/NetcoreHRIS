@@ -44,12 +44,30 @@ public static class EntityBuilder
     public static readonly Guid CreateEmployeePermId = new("66666666-0000-0000-0000-000000000015");
     public static readonly Guid UpdateEmployeePermId = new("66666666-0000-0000-0000-000000000016");
     public static readonly Guid DeleteEmployeePermId = new("66666666-0000-0000-0000-000000000017");
+    public static readonly Guid ReadAttendancePermId = new("66666666-0000-0000-0000-000000000018");
+    public static readonly Guid CreateAttendancePermId = new("66666666-0000-0000-0000-000000000019");
+    public static readonly Guid UpdateAttendancePermId = new("66666666-0000-0000-0000-000000000020");
+    public static readonly Guid DeleteAttendancePermId = new("66666666-0000-0000-0000-000000000021");
+    public static readonly Guid ReadLeaveMasterPermId = new("66666666-0000-0000-0000-000000000022");
+    public static readonly Guid CreateLeaveMasterPermId = new("66666666-0000-0000-0000-000000000023");
+    public static readonly Guid UpdateLeaveMasterPermId = new("66666666-0000-0000-0000-000000000024");
+    public static readonly Guid DeleteLeaveMasterPermId = new("66666666-0000-0000-0000-000000000025");
+    public static readonly Guid ReadLeaveAllowancePermId = new("66666666-0000-0000-0000-000000000026");
+    public static readonly Guid CreateLeaveAllowancePermId = new("66666666-0000-0000-0000-000000000027");
+    public static readonly Guid UpdateLeaveAllowancePermId = new("66666666-0000-0000-0000-000000000028");
+    public static readonly Guid DeleteLeaveAllowancePermId = new("66666666-0000-0000-0000-000000000029");
+    public static readonly Guid ReadLeaveRequestPermId = new("66666666-0000-0000-0000-000000000030");
+    public static readonly Guid CreateLeaveRequestPermId = new("66666666-0000-0000-0000-000000000031");
+    public static readonly Guid UpdateLeaveRequestPermId = new("66666666-0000-0000-0000-000000000032");
+    public static readonly Guid DeleteLeaveRequestPermId = new("66666666-0000-0000-0000-000000000033");
     public static readonly Guid EngineeringId = new("33333333-0000-0000-0000-000000000001");
     public static readonly Guid HrDeptId = new("33333333-0000-0000-0000-000000000002");
     public static readonly Guid SeniorDevId = new("44444444-0000-0000-0000-000000000001");
     public static readonly Guid HrManagerId = new("44444444-0000-0000-0000-000000000002");
     public static readonly Guid Employee1Id = new("55555555-0000-0000-0000-000000000001");
     public static readonly Guid Employee2Id = new("55555555-0000-0000-0000-000000000002");
+    public static readonly Guid AnnualLeaveId = new("77777777-0000-0000-0000-000000000001");
+    public static readonly Guid SickLeaveId = new("77777777-0000-0000-0000-000000000002");
     public static readonly Guid ManageAllPermId = new("66666666-0000-0000-0000-000000000001");
     public static readonly Guid ReadRolePermId = new("66666666-0000-0000-0000-000000000006");
     public static readonly Guid ReadUserPermId = new("66666666-0000-0000-0000-000000000002");
@@ -70,7 +88,23 @@ public static class EntityBuilder
             new Permission { Id = ReadEmployeePermId, Action = "read", Subject = "Employee" },
             new Permission { Id = CreateEmployeePermId, Action = "create", Subject = "Employee" },
             new Permission { Id = UpdateEmployeePermId, Action = "update", Subject = "Employee" },
-            new Permission { Id = DeleteEmployeePermId, Action = "delete", Subject = "Employee" }
+            new Permission { Id = DeleteEmployeePermId, Action = "delete", Subject = "Employee" },
+            new Permission { Id = ReadAttendancePermId, Action = "read", Subject = "Attendance" },
+            new Permission { Id = CreateAttendancePermId, Action = "create", Subject = "Attendance" },
+            new Permission { Id = UpdateAttendancePermId, Action = "update", Subject = "Attendance" },
+            new Permission { Id = DeleteAttendancePermId, Action = "delete", Subject = "Attendance" },
+            new Permission { Id = ReadLeaveMasterPermId, Action = "read", Subject = "LeaveMaster" },
+            new Permission { Id = CreateLeaveMasterPermId, Action = "create", Subject = "LeaveMaster" },
+            new Permission { Id = UpdateLeaveMasterPermId, Action = "update", Subject = "LeaveMaster" },
+            new Permission { Id = DeleteLeaveMasterPermId, Action = "delete", Subject = "LeaveMaster" },
+            new Permission { Id = ReadLeaveAllowancePermId, Action = "read", Subject = "LeaveAllowance" },
+            new Permission { Id = CreateLeaveAllowancePermId, Action = "create", Subject = "LeaveAllowance" },
+            new Permission { Id = UpdateLeaveAllowancePermId, Action = "update", Subject = "LeaveAllowance" },
+            new Permission { Id = DeleteLeaveAllowancePermId, Action = "delete", Subject = "LeaveAllowance" },
+            new Permission { Id = ReadLeaveRequestPermId, Action = "read", Subject = "LeaveRequest" },
+            new Permission { Id = CreateLeaveRequestPermId, Action = "create", Subject = "LeaveRequest" },
+            new Permission { Id = UpdateLeaveRequestPermId, Action = "update", Subject = "LeaveRequest" },
+            new Permission { Id = DeleteLeaveRequestPermId, Action = "delete", Subject = "LeaveRequest" }
         );
 
         // Roles
@@ -162,6 +196,27 @@ public static class EntityBuilder
                 EmployeeId = Employee2Id,
                 PositionId = HrManagerId,
                 StartDate = new DateOnly(2021, 3, 1),
+                IsActive = true
+            }
+        );
+
+        await db.SaveChangesAsync();
+
+        db.LeaveMasters.AddRange(
+            new LeaveMaster
+            {
+                Id = AnnualLeaveId,
+                Name = "Annual Leave",
+                Code = "AL",
+                QuotaDays = 12,
+                IsActive = true
+            },
+            new LeaveMaster
+            {
+                Id = SickLeaveId,
+                Name = "Sick Leave",
+                Code = "SL",
+                QuotaDays = 6,
                 IsActive = true
             }
         );

@@ -125,7 +125,8 @@ public class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
     public HttpClient CreateViewerClient()
     {
         var token = GenerateToken(EntityBuilder.RegularUserId, "user@example.com",
-            ["read:User", "read:Employee", "read:Department", "read:Position", "read:Role"]);
+            ["read:User", "read:Employee", "read:Department", "read:Position", "read:Role",
+             "read:Attendance", "read:LeaveMaster", "read:LeaveAllowance", "read:LeaveRequest"]);
         var client = CreateClient();
         ApplyTestIp(client);
         client.DefaultRequestHeaders.Authorization =

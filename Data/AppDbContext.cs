@@ -17,6 +17,10 @@ public class AppDbContext : DbContext
     public DbSet<Position> Positions => Set<Position>();
     public DbSet<Employee> Employees => Set<Employee>();
     public DbSet<PositionHistory> PositionHistories => Set<PositionHistory>();
+    public DbSet<Attendance> Attendances => Set<Attendance>();
+    public DbSet<LeaveMaster> LeaveMasters => Set<LeaveMaster>();
+    public DbSet<LeaveAllowance> LeaveAllowances => Set<LeaveAllowance>();
+    public DbSet<LeaveRequest> LeaveRequests => Set<LeaveRequest>();
 
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
 
