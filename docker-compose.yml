@@ -2,8 +2,8 @@ services:
   # 🐘 PostgreSQL
   postgres:
     image: postgres:16-alpine
-    container_name: netcore_starter_postgres
-    restart: always
+    container_name: netcore_hris_postgres
+    restart: unless-stopped
     env_file:
       - .env
     environment:
@@ -23,8 +23,8 @@ services:
   # 🔴 Redis
   redis:
     image: redis:7-alpine
-    container_name: netcore_rbac_redis
-    restart: always
+    container_name: netcore_hris_redis
+    restart: unless-stopped
     ports:
       - "6381:6379"
     volumes:
@@ -40,8 +40,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: netcore_rbac_api
-    restart: always
+    container_name: netcore_hris_api
+    restart: unless-stopped
     depends_on:
       postgres:
         condition: service_healthy
