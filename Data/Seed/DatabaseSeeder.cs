@@ -41,6 +41,7 @@ public static class DatabaseSeeder
     private static readonly Guid CreateLeaveRequestPermissionId = Guid.Parse("66666666-0000-0000-0000-000000000031");
     private static readonly Guid UpdateLeaveRequestPermissionId = Guid.Parse("66666666-0000-0000-0000-000000000032");
     private static readonly Guid DeleteLeaveRequestPermissionId = Guid.Parse("66666666-0000-0000-0000-000000000033");
+    private static readonly Guid ReadReportPermissionId = Guid.Parse("66666666-0000-0000-0000-000000000034");
 
     private static readonly Guid AdminUserId = Guid.Parse("22222222-0000-0000-0000-000000000001");
     private static readonly Guid ViewerUserId = Guid.Parse("22222222-0000-0000-0000-000000000002");
@@ -93,7 +94,8 @@ public static class DatabaseSeeder
             new Permission { Id = ReadLeaveRequestPermissionId, Action = "read", Subject = "LeaveRequest" },
             new Permission { Id = CreateLeaveRequestPermissionId, Action = "create", Subject = "LeaveRequest" },
             new Permission { Id = UpdateLeaveRequestPermissionId, Action = "update", Subject = "LeaveRequest" },
-            new Permission { Id = DeleteLeaveRequestPermissionId, Action = "delete", Subject = "LeaveRequest" }
+            new Permission { Id = DeleteLeaveRequestPermissionId, Action = "delete", Subject = "LeaveRequest" },
+            new Permission { Id = ReadReportPermissionId, Action = "read", Subject = "Report" }
         };
 
         foreach (var permission in permissions)

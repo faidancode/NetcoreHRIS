@@ -17,6 +17,7 @@ using NetcoreHRIS.Modules.LeaveMasters;
 using NetcoreHRIS.Modules.LeaveAllowances;
 using NetcoreHRIS.Modules.LeaveRequests;
 using NetcoreHRIS.Modules.Attendances;
+using NetcoreHRIS.Modules.Reports;
 using NetcoreHRIS.Security;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.Mvc;
@@ -96,6 +97,7 @@ public static class AppServiceConfiguration
         services.AddScoped<ILeaveAllowancesService, LeaveAllowancesService>();
         services.AddScoped<ILeaveRequestsService, LeaveRequestsService>();
         services.AddScoped<IAttendancesService, AttendancesService>();
+        services.AddScoped<IReportsService, ReportsService>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<AuditService>();
